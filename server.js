@@ -23,11 +23,11 @@ app.use(bodyParser.json());
 app.use('/', router);
 app.get("/",(req,res) => {
   
-  res.json({mesage:"Bienvenido Estudiantes de UMG"});
+  res.json({mesage:"Servicio activos"});
 })
 
-// Create a Server
-const server = app.listen(3000, function () {
+// Crear el servidor  
+const server = app.listen(8080, function () {
  
   let host = server.address().address
   let port = server.address().port

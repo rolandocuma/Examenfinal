@@ -1,18 +1,18 @@
-const express = require("express");
-const router = express.Router();
-const huespedController = require("../controllers/huesped.controller.js");
 
-// Crear un nuevo huésped
-router.post("/api/huespedes/create", huespedController.create);
+let express = require('express');
+let router = express.Router();
 
-// Obtener un huésped por ID
-router.get("/api/huespedes/onebyid/:id", huespedController.getHuespedById);
+ //constasntes de rutas 
+const huespedes = require('../controllers/huesped.controller.js');
 
-// Actualizar un huésped por ID
-router.put("/api/huespedes/update/:id", huespedController.updateById);
 
-// Eliminar un huésped por ID
-router.delete("/api/huespedes/delete/:id", huespedController.deleteById);
+router.post('/api/huespedes/create', huespedes.create);
+router.get('/api/huespedes/all', huespedes.retrieveAllHuespedes);
+router.get('/api/huespedes/onebyid/:id', huespedes.getHuespedById);
+router.put('/api/huespedes/update/:id', huespedes.updateById);
+router.delete('/api/huespedes/delete/:id', huespedes.deleteById);
+
+
+
 
 module.exports = router;
-

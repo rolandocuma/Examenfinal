@@ -7,101 +7,104 @@ exports.create = (req, res) => {
     try {
         huesped.nombre = req.body.nombre;
         huesped.apellido = req.body.apellido;
-        huesped.dpi = req.body.dpi;
+        huesped.documento_identidad = req.body.documento_identidad;
         huesped.telefono = req.body.telefono;
-        huesped.correo = req.body.correo;
+        huesped.correo_electronico = req.body.correo_electronico;
         huesped.habitacion = req.body.habitacion;
 
-        Huesped.create(huesped).then(result => {
+        Huesped.create(huesped).then(result => {    
             res.status(200).json({
-                message: "Huésped creado exitosamente con id = " + result.id_huesped,
+                message: "Upload Successfully a Huesped with id = " + result.id_huesped,
                 huesped: result,
             });
         });
     } catch (error) {
         res.status(500).json({
-            message: "¡Fallo al crear el huésped!",
+            message: "Fail!",
             error: error.message
         });
     }
-};
+}
 
 exports.retrieveAllHuespedes = (req, res) => {
     Huesped.findAll()
-        .then(huespedInfos => {
+        .then(huespedes => {
             res.status(200).json({
-                message: "¡Huéspedes obtenidos exitosamente!",
-                huespedes: huespedInfos
+                message: "Get all Huespedes' Infos Successfully!",
+                huespedes: huespedes
             });
         })
         .catch(error => {
             console.log(error);
             res.status(500).json({
-                message: "¡Error al obtener los huéspedes!",
+                message: "Error!",
                 error: error
             });
         });
-};
+}
 
 exports.getHuespedById = (req, res) => {
     let huespedId = req.params.id;
     Huesped.findByPk(huespedId)
         .then(huesped => {
             res.status(200).json({
-                message: "Huésped obtenido exitosamente con id = " + huespedId,
+                message: "Successfully Get a Huesped with id = " + huespedId,
                 huesped: huesped
             });
         })
         .catch(error => {
             console.log(error);
             res.status(500).json({
-                message: "¡Error al obtener huésped con id!",
+                message: "Error!",
                 error: error
             });
         });
-};
+}
+
+
+
 
 exports.updateById = async (req, res) => {
     try {
         let huespedId = req.params.id;
         let huesped = await Huesped.findByPk(huespedId);
-    
+
         if (!huesped) {
             res.status(404).json({
-                message: "No se encontró el huésped para actualizar con id = " + huespedId,
+                message: "Not Found for updating a Huesped with id = " + huespedId,
                 huesped: "",
                 error: "404"
             });
-        } else {    
+        } else {
             let updatedObject = {
                 nombre: req.body.nombre,
                 apellido: req.body.apellido,
-                dpi: req.body.dpi,
+                documento_identidad: req.body.documento_identidad,
                 telefono: req.body.telefono,
-                correo: req.body.correo,
+                correo_electronico: req.body.correo_electronico,
                 habitacion: req.body.habitacion
-            }
+            };
             let result = await Huesped.update(updatedObject, { returning: true, where: { id_huesped: huespedId } });
-            
+
             if (!result) {
                 res.status(500).json({
-                    message: "No se puede actualizar un huésped con id = " + req.params.id,
-                    error: "No se pudo actualizar el huésped",
+                    message: "Error -> Can not update a Huesped with id = " + req.params.id,
+                    error: "Can NOT Updated",
                 });
-            };
+            }
 
             res.status(200).json({
-                message: "Actualización exitosa de un huésped con id = " + huespedId,
+                message: "Update successfully a Huesped with id = " + huespedId,
                 huesped: updatedObject,
             });
         }
     } catch (error) {
         res.status(500).json({
-            message: "No se puede actualizar un huésped con id = " + req.params.id,
+            message: "Error -> Can not update a Huesped with id = " + req.params.id,
             error: error.message
         });
     }
-};
+}
 
 exports.deleteById = async (req, res) => {
     try {
@@ -110,20 +113,20 @@ exports.deleteById = async (req, res) => {
 
         if (!huesped) {
             res.status(404).json({
-                message: "No existe el huésped con id = " + huespedId,
+                message: "Does Not exist a Huesped with id = " + huespedId,
                 error: "404",
             });
         } else {
             await huesped.destroy();
             res.status(200).json({
-                message: "Eliminación exitosa del huésped con id = " + huespedId,
+                message: "Delete Successfully a Huesped with id = " + huespedId,
                 huesped: huesped,
             });
         }
     } catch (error) {
         res.status(500).json({
-            message: "No se puede eliminar un huésped con id = " + req.params.id,
+            message: "Error -> Can NOT delete a Huesped with id = " + req.params.id,
             error: error.message,
         });
     }
-};
+}

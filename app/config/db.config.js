@@ -1,3 +1,5 @@
+
+
 const env = require('./env.js');
  
 const Sequelize = require('sequelize');
@@ -10,6 +12,7 @@ const sequelize = new Sequelize(env.database, env.username, env.password, {
       rejectUnauthorized: false
     }
   },
+  operatorsAliases: false,
  
   pool: {
     max: env.max,
@@ -23,8 +26,8 @@ const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
- 
-db.Huesped = require('../models/huesped.model.js')(sequelize, Sequelize);
+ //para mandar al servidor
 
+db.Huesped = require('../models/huesped.model.js')(sequelize, Sequelize);
 
 module.exports = db;

@@ -1,35 +1,31 @@
 module.exports = (sequelize, Sequelize) => {
-    const Huesped = sequelize.define("huespedes", {
-        id_huesped: {
-            type: Sequelize.INTEGER,
-            autoIncrement: true,
-            primaryKey: true
-        },
-        nombre: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
-        apellido: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
-        dpi: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
-        telefono: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
-        correo: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
-        habitacion: {
-            type: Sequelize.INTEGER,
-            allowNull: false
-        }
-    });
-    return Huesped;
-};
+	const Huesped = sequelize.define('huesped', {	
+	  id_huesped: {
+			type: Sequelize.INTEGER,
+			autoIncrement: true,
+			primaryKey: true
+	  },
+	  nombre: {
+			type: Sequelize.STRING
+	  },
+	  apellido: {
+			type: Sequelize.STRING
+  	},
+	  documento_identidad: {
+			type: Sequelize.STRING
+	  },
+	  telefono: {
+			type: Sequelize.STRING
+    },
+    correo_electronico: {
+      type: Sequelize.STRING
+    },
+    habitacion: {
+      type: Sequelize.INTEGER
+    }
+	});
+	
+	return Huesped;
+}
+
 

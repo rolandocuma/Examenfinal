@@ -1,18 +1,15 @@
-
 let express = require('express');
 let router = express.Router();
 
- //constasntes de rutas 
-const huespedes = require('../controllers/huesped.controller.js');
+// Constantes de rutas
+const juegos = require('../controllers/juego.controller.js');
 
-
-router.post('/api/huespedes/create', huespedes.create);
-router.get('/api/huespedes/all', huespedes.retrieveAllHuespedes);
-router.get('/api/huespedes/onebyid/:id', huespedes.getHuespedById);
-router.put('/api/huespedes/update/:id', huespedes.updateById);
-router.delete('/api/huespedes/delete/:id', huespedes.deleteById);
-
-
-
+// Rutas para gestionar juegos
+router.post('/api/juegos/create', juegos.create);
+router.get('/api/juegos/all', juegos.retrieveAllJuegos);
+router.get('/api/juegos/onebyid/:id', juegos.getJuegoById);
+router.put('/api/juegos/update/:id', juegos.updateById);
+router.delete('/api/juegos/delete/:id', juegos.deleteById);
 
 module.exports = router;
+

@@ -28,6 +28,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
  //para mandar al servidor
 
-db.Huesped = require('../models/huesped.model.js')(sequelize, Sequelize);
+db.Huesped = require('../models/juego.model.js')(sequelize, Sequelize);
 
 module.exports = db;

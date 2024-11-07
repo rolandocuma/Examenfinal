@@ -4,7 +4,6 @@ const Juego = db.Juego;
 // Crear un nuevo juego
 exports.create = (req, res) => {
     let juego = {};
-
     try {
         juego.nombre_juego = req.body.nombre_juego;
         juego.genero = req.body.genero;

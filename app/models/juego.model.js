@@ -18,10 +18,10 @@ module.exports = (sequelize, Sequelize) => {
 		type: Sequelize.DATE
 	  },
 	  precio_alquiler: {
-		type: Sequelize.DECIMAL(10, 2)
+		type: Sequelize.INTEGER
 	  },
 	  disponibilidad: {
-		type: Sequelize.ENUM('disponible', 'no_disponible'),
+		type: Sequelize.STRING
 	  },
 	  fecha_alquiler: {
 		type: Sequelize.DATE
@@ -30,7 +30,7 @@ module.exports = (sequelize, Sequelize) => {
 		type: Sequelize.STRING
 	  },
 	  comentarios: {
-		type: Sequelize.TEXT
+		type: Sequelize.STRING
 	  }
 	});
   

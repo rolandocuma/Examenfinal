@@ -1,6 +1,7 @@
 const db = require('../config/db.config.js');
 const Juego = db.Juego;
 
+// Crear un nuevo juego
 exports.create = (req, res) => {
     let juego = {};
 
@@ -15,7 +16,7 @@ exports.create = (req, res) => {
         juego.nombre_cliente = req.body.nombre_cliente;
         juego.comentarios = req.body.comentarios;
 
-        Juego.create(juego).then(result => {
+        Juego.create(juego).then(result => {    
             res.status(200).json({
                 message: "Juego creado exitosamente con id = " + result.id_juego,
                 juego: result,
@@ -29,6 +30,7 @@ exports.create = (req, res) => {
     }
 }
 
+// Obtener todos los juegos
 exports.retrieveAllJuegos = (req, res) => {
     Juego.findAll()
         .then(juegos => {
@@ -46,6 +48,7 @@ exports.retrieveAllJuegos = (req, res) => {
         });
 }
 
+// Obtener un juego por ID
 exports.getJuegoById = (req, res) => {
     let juegoId = req.params.id;
     Juego.findByPk(juegoId)
@@ -64,72 +67,50 @@ exports.getJuegoById = (req, res) => {
         });
 }
 
-exports.updateById = async (req, res) => {
-    try {
-        let juegoId = req.params.id;
-        let juego = await Juego.findByPk(juegoId);
+// Actualizar un juego por ID
+exports.updateById = (req, res) => {
+    let juegoId = req.params.id;
+    let updatedObject = {
+        nombre_juego: req.body.nombre_juego,
+        genero: req.body.genero,
+        plataforma: req.body.plataforma,
+        fecha_lanzamiento: req.body.fecha_lanzamiento,
+        precio_alquiler: req.body.precio_alquiler,
+        disponibilidad: req.body.disponibilidad,
+        fecha_alquiler: req.body.fecha_alquiler,
+        nombre_cliente: req.body.nombre_cliente,
+        comentarios: req.body.comentarios
+    };
 
-        if (!juego) {
-            res.status(404).json({
-                message: "Juego no encontrado con id = " + juegoId,
-                error: "404"
-            });
-        } else {
-            let updatedObject = {
-                nombre_juego: req.body.nombre_juego,
-                genero: req.body.genero,
-                plataforma: req.body.plataforma,
-                fecha_lanzamiento: req.body.fecha_lanzamiento,
-                precio_alquiler: req.body.precio_alquiler,
-                disponibilidad: req.body.disponibilidad,
-                fecha_alquiler: req.body.fecha_alquiler,
-                nombre_cliente: req.body.nombre_cliente,
-                comentarios: req.body.comentarios
-            };
-            let result = await Juego.update(updatedObject, { returning: true, where: { id_juego: juegoId } });
-
-            if (!result) {
-                res.status(500).json({
-                    message: "Error al actualizar el juego con id = " + req.params.id,
-                    error: "No se pudo actualizar",
-                });
-            }
-
+    Juego.update(updatedObject, { where: { id_juego: juegoId } })
+        .then(result => {
             res.status(200).json({
                 message: "Juego actualizado exitosamente con id = " + juegoId,
                 juego: updatedObject,
             });
-        }
-    } catch (error) {
-        res.status(500).json({
-            message: "Error al actualizar el juego con id = " + req.params.id,
-            error: error.message
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Error al actualizar el juego con id = " + req.params.id,
+                error: error.message
+            });
         });
-    }
 }
 
-exports.deleteById = async (req, res) => {
-    try {
-        let juegoId = req.params.id;
-        let juego = await Juego.findByPk(juegoId);
+// Eliminar un juego por ID
+exports.deleteById = (req, res) => {
+    let juegoId = req.params.id;
 
-        if (!juego) {
-            res.status(404).json({
-                message: "No existe un juego con id = " + juegoId,
-                error: "404",
-            });
-        } else {
-            await juego.destroy();
+    Juego.destroy({ where: { id_juego: juegoId } })
+        .then(() => {
             res.status(200).json({
-                message: "Juego eliminado exitosamente con id = " + juegoId,
-                juego: juego,
+                message: "Juego eliminado exitosamente con id = " + juegoId
             });
-        }
-    } catch (error) {
-        res.status(500).json({
-            message: "Error al eliminar el juego con id = " + req.params.id,
-            error: error.message,
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Error al eliminar el juego con id = " + req.params.id,
+                error: error.message,
+            });
         });
-    }
 }
-

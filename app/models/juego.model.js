@@ -26,6 +26,9 @@ module.exports = (sequelize, Sequelize) => {
 	  fecha_alquiler: {
 		type: Sequelize.DATE
 	  },
+	  fecha_devolucion:{
+		type: Sequelize.DATE
+	  },
 	  nombre_cliente: {
 		type: Sequelize.STRING
 	  },
